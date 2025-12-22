@@ -1,0 +1,12 @@
+# Core dependencies
+torch>=1.4.0
+numpy>=1.18.1
+scipy>=1.4.1
+
+# Training dependencies
+tqdm>=4.0.0
+
+# Inference dependencies
+requests>=2.23.0
+psutil>=5.7.0
+
