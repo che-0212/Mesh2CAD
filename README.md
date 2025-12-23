@@ -1,4 +1,4 @@
-# Mesh2CAD
+# Mesh2Sequences
 Automated Conversion of Unstructured Mesh Models to Structured Parametric CAD Models
 
 ## Flow Chart
@@ -12,8 +12,8 @@ Automated Conversion of Unstructured Mesh Models to Structured Parametric CAD Mo
 1. Install Fusion 360 (requires educational or commercial account)
 2. Create a conda virtual environment:
    ```bash
-   conda create -n mesh2cad python=3.9
-   conda activate mesh2cad
+   conda create -n mesh2sequences python=3.9
+   conda activate mesh2sequences
    ```
 3. Install Python dependencies:
    ```bash
@@ -40,11 +40,11 @@ Main arguments:
 - `--epochs`: Number of training epochs [default: 100]
 - `--lr`: Learning rate [default: 0.0001]
 
-Pre-trained models are saved in `train/ckpt/` directory.
+Trained models are saved in `train/ckpt/` directory.
 
-### Download Pre-trained Models
+### Download Model Weights
 
-Pre-trained model weights are available on [Google Drive](https://drive.google.com/drive/folders/1eFpZMAzIylqMp6RghP1bQhwqMpPlpOCS?dmr=1&ec=wgc-drive-hero-goto). Download the model checkpoints and place them in the `train/ckpt/` directory for inference.
+Trained model weights are available on [Google Drive](https://drive.google.com/drive/folders/1eFpZMAzIylqMp6RghP1bQhwqMpPlpOCS?dmr=1&ec=wgc-drive-hero-goto). Download the model checkpoints and place them in the `train/ckpt/` directory for inference.
 
 ## Inference
 
