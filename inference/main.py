@@ -1,5 +1,4 @@
 import json
-import random
 import argparse
 import traceback
 import copy
@@ -10,9 +9,7 @@ from threading import Timer
 from requests.exceptions import ConnectionError
 
 from repl_env import ReplEnv
-from agent_random import AgentRandom
 from agent_supervised import AgentSupervised
-from search_random import SearchRandom
 from search_beam import SearchBeam
 from search_best import SearchBest
 
@@ -24,8 +21,8 @@ parser.add_argument("--output", type=str, help="Folder to save the output logs t
 parser.add_argument("--screenshot", dest="screenshot", default=False, action="store_true", help="Save screenshots during reconstruction [default: False]")
 parser.add_argument("--launch_gym", dest="launch_gym", default=False, action="store_true",
                     help="Launch the Fusion 360 Gym automatically, requires the gym to be set to run on startup [default: False]")
-parser.add_argument("--agent", type=str, default="rand", choices=["rand", "gcn", "mlp"], help="Agent to use, can be rand, gcn, or mlp [default: rand]")
-parser.add_argument("--search", type=str, default="rand", choices=["rand", "beam", "best"], help="Search to use, can be rand, beam or best [default: rand]")
+parser.add_argument("--agent", type=str, default="gcn", choices=["gcn", "mlp"], help="Agent to use, can be gcn or mlp [default: gcn]")
+parser.add_argument("--search", type=str, default="best", choices=["beam", "best"], help="Search to use, can be beam or best [default: best]")
 parser.add_argument("--budget", type=int, default=100, help="The number of steps to search [default: 100]")
 parser.add_argument("--synthetic_data", type=str, choices=["aug", "semisyn", "syn"], help="Type of synthetic data to use, can be aug, semisyn, or syn")
 parser.add_argument("--debug", dest="debug", default=False, action="store_true", help="Debug mode [default: False]")
@@ -88,10 +85,8 @@ def get_output_dir():
 
 
 def get_search(env, output_dir):
-    """Get the agent based on user input"""
-    if args.search == "rand":
-        return SearchRandom(env, output_dir)
-    elif args.search == "beam":
+    """Get the search strategy based on user input"""
+    if args.search == "beam":
         return SearchBeam(env, output_dir)
     elif args.search == "best":
         return SearchBest(env, output_dir)
@@ -99,10 +94,7 @@ def get_search(env, output_dir):
 
 def get_agent():
     """Get the agent based on user input"""
-    if args.agent == "rand":
-        return AgentRandom()
-    else:
-        return AgentSupervised(agent=args.agent, syn_data=args.synthetic_data)
+    return AgentSupervised(agent=args.agent, syn_data=args.synthetic_data)
 
 
 def load_results(output_dir):

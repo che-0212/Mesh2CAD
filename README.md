@@ -10,11 +10,16 @@ Automated Conversion of Unstructured Mesh Models to Structured Parametric CAD Mo
 ### Launch Fusion 360 Environment
 
 1. Install Fusion 360 (requires educational or commercial account)
-2. Install Python dependencies:
+2. Create a conda virtual environment:
+   ```bash
+   conda create -n mesh2cad python=3.9
+   conda activate mesh2cad
    ```
-   pip install pytorch torch_geometric numpy scipy psutil requests
+3. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
    ```
-3. Launch Gym server in Fusion 360:
+4. Launch Gym server in Fusion 360:
    - Open Fusion 360
    - Go to Tools > Add-ins > Scripts and Add-ins
    - Add and run the Fusion 360 Gym server
@@ -37,19 +42,23 @@ Main arguments:
 
 Pre-trained models are saved in `train/ckpt/` directory.
 
+### Download Pre-trained Models
+
+Pre-trained model weights are available on [Google Drive](https://drive.google.com/drive/folders/1eFpZMAzIylqMp6RghP1bQhwqMpPlpOCS?dmr=1&ec=wgc-drive-hero-goto). Download the model checkpoints and place them in the `train/ckpt/` directory for inference.
+
 ## Inference
 
 Navigate to `inference` directory and run the inference script:
 
 ```bash
 cd inference
-python main.py --input /path/to/target.smt --agent gcn --search best
+python main.py --input /path/to/target.step --agent gcn --search best
 ```
 
 Main arguments:
 - `--input`: Target B-Rep file or folder
-- `--agent`: Agent type, options: `rand`, `gcn`, `mlp` [default: `rand`]
-- `--search`: Search strategy, options: `rand`, `beam`, `best` [default: `rand`]
+- `--agent`: Agent type, options: `gcn`, `mlp` [default: `gcn`]
+- `--search`: Search strategy, options: `beam`, `best` [default: `best`]
 - `--budget`: Number of search steps [default: 100]
 - `--launch_gym`: Auto-launch Fusion 360 Gym [default: False]
 
